@@ -1,30 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import Post from "./Post";
+import Header from "./Header";
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      id: Math.random(),
+      title: 'Title#01',
+      subtitle: "Sub#01",
+      likes: 5,
+      read: false
+    },
+    {
+      id: Math.random(),
+      title: 'Title#02',
+      subtitle: "Sub#02",
+      likes: 10,
+      read: true
+    },
+    {
+      id: Math.random(),
+      title: 'Title#03',
+      subtitle: "Sub#03",
+      likes: 15,
+      read: false
+    }
+  ]);
+
+  function handleRefresh() {
+    setPosts((prevState) => [
+      ...prevState,
+      {
+        id: Math.random(),
+        title: `Title#0${prevState.length + 1}`,
+        subtitle: `Sub#0${prevState.length + 1}`,
+        likes: 1
+      }
+    ]);
+  }
+
+  function handleRemovePost(postId) {
+    setPosts((prevState) => (
+      prevState.filter((post) => post.id !== postId)
+    ));
+  }
+
   return (
     <>
-      <h1>JStack's Blog</h1>
-      <h1>Posts da Semana</h1>
+      <Header>
+        <h2>
+          Posts da Semana
+          <button onClick={handleRefresh}>Atualizar</button>
+        </h2>
+      </Header>
 
       <hr />
 
-      <Post
-        title="Título da Notícia 01"
-        subtitle="Javascript"
-      />
-      <Post
-        title="Título da Notícia 02"
-        subtitle="ReactJS"
-      />
-      <Post
-        title="Título da Notícia 03"
-        subtitle="NodeJS"
-      />
-      <Post
-        title="Título da Notícia 04"
-        subtitle="NextJS"
-      />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          onRemove={handleRemovePost}
+          post={post}
+        />
+      ))}
     </>
   )
 }
