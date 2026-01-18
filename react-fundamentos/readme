@@ -1,0 +1,41 @@
+Babel: is a JavaScript compiler (transpiler) that converts modern syntax (ES6+) into older, widely-supported JavaScript (ES5) for browser compatibility
+
+Webpack:  is a module bundler that packages all your project's files (JS, CSS, images) into optimized bundles for the browser
+
+Loaders: allow webpack to process other types of files and convert them into valid modules that can be consumed by your application and added to the dependency graph
+
+Functional Component: use functions
+
+Class Component: use classes
+
+
+- React Fragment - Usages:
+    - React.Fragment
+        function App() {
+            return (
+                <React.Fragment>
+                    <h1>JStack's Blog</h1>
+                    <h1>{category}</h1>
+                </React.Fragment>
+            )
+        }
+
+    - Fragment (Import)
+        function App() {
+            return (
+                <Fragment>
+                    <h1>JStack's Blog</h1>
+                    <h1>{category}</h1>
+                </Fragment>
+            )
+        }
+
+    - <></>
+        function App() {
+            return (
+                <>
+                    <h1>JStack's Blog</h1>
+                    <h1>{category}</h1>
+                </>
+            )
+        }
