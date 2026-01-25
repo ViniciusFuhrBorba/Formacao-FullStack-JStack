@@ -1,11 +1,14 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import App from "./App";
+import GlobalStyle from './styles/global';
 
-import './index.scss';
+import App from "./components/App";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-    <App />
+    <>
+        <GlobalStyle />
+        <App />
+    </>
 );
