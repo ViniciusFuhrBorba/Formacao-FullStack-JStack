@@ -1,60 +1,87 @@
-import React, { useState, useMemo, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { Component } from 'react';
 
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+
+import { ThemeProvider, ThemeContext } from './contexts/ThemeContext';
 
 import GlobalStyle from './styles/global';
 import Layout from './components/Layout';
 
 import themes from './styles/themes';
 
-function App() {
-  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem('theme')) || 'dark');
-
-  const firstRender = useRef(true);
-
-  const currentTheme = useMemo(() => {
-    return themes[theme] || themes.dark
-  }, [theme])
-
-  function handleToggleTheme() {
-    setTheme(prevState => prevState == 'dark' ? 'light' : 'dark');
+class App extends Component {
+  state = {
+    changed: false
   }
 
-  useEffect(() => {
-    console.debug('todo render');
-  });
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
 
-  useEffect(() => {
-    console.debug('primeiro render');
-  }, [])
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate', this.state, nextProps, nextState);
+    return true;
+  }
 
-  useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate', this.state, prevProps, prevState);
+  }
 
-    console.debug({ theme })
-    localStorage.setItem('theme', JSON.stringify(theme));
-  }, [theme])
+  componentDidCatch(error, info) {
+    console.log('componentDidCatch', error, info);
+  }
 
-  // useLayoutEffect(() => {
-  //   //Trava a renderização até finalizar de executar
-  //   for (let i = 0; i <= 15000; i++) {
-  //     console.debug(i);
-  //   }
-  //   console.debug('useLayoutEffect')
-  // }, [theme])
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
 
-  return (
-    <ThemeProvider theme={currentTheme}>
-      <GlobalStyle />
-      <button onClick={handleToggleTheme}>Toggle</button>
-      {theme === 'dark' && (
-        <Layout onToggleTheme={handleToggleTheme} selectedTheme={theme} />
-      )}
-    </ThemeProvider>
-  );
-};
+  render() {
+    console.log('rendered');
+    return (
+      <ThemeProvider>
+
+        <ThemeContext.Consumer>
+          {({ theme, handleToggleTheme }) => (
+            <StyledThemeProvider theme={themes[theme] || themes.dark}>
+              <button onClick={handleToggleTheme}>Change State</button>
+              <GlobalStyle />
+              {theme == 'dark' && <Layout />}
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </StyledThemeProvider>
+          )}
+        </ThemeContext.Consumer>
+      </ThemeProvider>
+    )
+  }
+}
 
 export default App;

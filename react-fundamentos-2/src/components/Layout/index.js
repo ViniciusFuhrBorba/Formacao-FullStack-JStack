@@ -1,42 +1,31 @@
-import React, { use, useEffect } from 'react';
+import React, { Component } from 'react';
 
 import Header from '../Header';
 import PostsList from '../PostsList';
 import Footer from '../Footer';
 
-export default function Layout({ onToggleTheme, selectedTheme }) {
+export default class Layout extends Component {
+  componentDidMount() {
+    console.log('componentDidMount - Layout')
+    document.addEventListener('scroll', this.handleScroll)
+  }
 
-  useEffect(() => {
-    console.debug({ selectedTheme })
+  componentWillUnmount() {
+    console.log('componentWillUnmount - Layout');
+    document.removeEventListener('scroll', this.handleScroll)
+  }
 
-    return () => {
-      console.debug('Layout saiu da tela')
-    }
-  }, [selectedTheme])
+  handleScroll = () => {
+    console.log('scrolled...')
+  }
 
-  useEffect(() => {
-    function handleScroll() {
-      console.debug('scroll ativado');
-    }
-
-    document.addEventListener('scroll', handleScroll)
-
-    return () => {
-      document.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  return (
-    <>
-      <Header
-        onToggleTheme={onToggleTheme}
-        selectedTheme={selectedTheme}
-      />
-      <PostsList />
-      <Footer
-        onToggleTheme={onToggleTheme}
-        selectedTheme={selectedTheme}
-      />
-    </>
-  );
+  render() {
+    return (
+      <>
+        <Header />
+        <PostsList />
+        <Footer />
+      </>
+    )
+  }
 }
